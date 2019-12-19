@@ -1,7 +1,7 @@
-package com.renzard.superherosquadmaker.network.response
+package com.renzard.superherosquadmaker.data.network.response
 
 
-data class Stories(
+data class Events(
     val available: Int,
     val collectionURI: String,
     val items: List<Any>,

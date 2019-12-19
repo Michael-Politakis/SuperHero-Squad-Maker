@@ -1,4 +1,4 @@
-package com.renzard.superherosquadmaker.network.response
+package com.renzard.superherosquadmaker.data.network.response
 
 
 data class Thumbnail(

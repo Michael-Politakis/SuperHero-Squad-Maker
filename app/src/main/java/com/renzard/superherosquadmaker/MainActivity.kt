@@ -3,7 +3,7 @@ package com.renzard.superherosquadmaker
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.renzard.superherosquadmaker.network.MarvelApiService
+import com.renzard.superherosquadmaker.data.apiRequest.MarvelApiService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
-        val apiService = MarvelApiService()
+        val apiService =
+            MarvelApiService()
         GlobalScope.launch(Dispatchers.Main) {
             val characterResult = apiService.getAllCharacters().await()
             charResponse.text = characterResult.name

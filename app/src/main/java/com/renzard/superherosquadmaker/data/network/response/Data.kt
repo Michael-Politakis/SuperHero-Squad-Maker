@@ -1,4 +1,6 @@
-package com.renzard.superherosquadmaker.network.response
+package com.renzard.superherosquadmaker.data.network.response
+
+import com.renzard.superherosquadmaker.data.db.Result
 
 
 data class Data(
