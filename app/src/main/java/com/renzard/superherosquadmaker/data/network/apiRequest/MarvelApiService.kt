@@ -1,8 +1,9 @@
-package com.renzard.superherosquadmaker.data.apiRequest
+package com.renzard.superherosquadmaker.data.network.apiRequest
 
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.renzard.superherosquadmaker.data.db.Result
+import com.renzard.superherosquadmaker.data.network.ConnectivityInterceptor
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -24,6 +25,7 @@ interface MarvelApiService {
     //intercepts all the get requests with the api key timestamp and hash
     companion object {
         operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
         ): MarvelApiService {
 
             val requestInterceptor = Interceptor { chain ->
@@ -47,6 +49,7 @@ interface MarvelApiService {
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
                 .addInterceptor(logging)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             return Retrofit.Builder()

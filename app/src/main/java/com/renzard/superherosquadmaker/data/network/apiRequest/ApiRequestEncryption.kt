@@ -1,4 +1,4 @@
-package com.renzard.superherosquadmaker.data.apiRequest
+package com.renzard.superherosquadmaker.data.network.apiRequest
 
 import java.security.MessageDigest
 import java.text.SimpleDateFormat

@@ -2,8 +2,11 @@ package com.renzard.superherosquadmaker
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.renzard.superherosquadmaker.data.apiRequest.MarvelApiService
+import com.renzard.superherosquadmaker.data.network.CharacterNetworkDataSourceImpl
+import com.renzard.superherosquadmaker.data.network.ConnectivityInterceptorImpl
+import com.renzard.superherosquadmaker.data.network.apiRequest.MarvelApiService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,11 +30,17 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
-        val apiService =
-            MarvelApiService()
+        val marvelApiService =
+            MarvelApiService(ConnectivityInterceptorImpl(this.applicationContext))
+        val characterNetworkDataSource = CharacterNetworkDataSourceImpl(marvelApiService)
+
+        characterNetworkDataSource.downloadedCharacterData.observe(this, Observer {
+            charResponse.text = it.toString()
+        }
+
+        )
         GlobalScope.launch(Dispatchers.Main) {
-            val characterResult = apiService.getAllCharacters().await()
-            charResponse.text = characterResult.name
+            characterNetworkDataSource.fetchCharacterData()
         }
     }
 
