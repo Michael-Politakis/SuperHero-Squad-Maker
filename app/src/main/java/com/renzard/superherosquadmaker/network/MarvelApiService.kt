@@ -14,14 +14,14 @@ import retrofit2.http.GET
 
 
 //https://gateway.marvel.com:443/v1/public/characters?apikey=f744427ffa2a0cd07771f0d93ade47e9
+//interface for all the get requests
 interface MarvelApiService {
-
-
     @GET("characters")
     fun getAllCharacters(
 
     ): Deferred<Result>
 
+    //intercepts all the get requests with the api key timestamp and hash
     companion object {
         operator fun invoke(
         ): MarvelApiService {
@@ -40,8 +40,10 @@ interface MarvelApiService {
                     .build()
                 return@Interceptor chain.proceed(request)
             }
+            //checking the url
             val logging = HttpLoggingInterceptor()
             logging.setLevel(BASIC)
+
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
                 .addInterceptor(logging)
