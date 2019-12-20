@@ -52,5 +52,10 @@ dependencies {
     //room
     implementation "androidx.room:room-runtime:2.2.3"
     implementation "androidx.room:room-ktx:2.2.3"
+    //Datetime
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+    //Kodin dependancy injection
+    implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.0'
+    implementation "org.kodein.di:kodein-di-framework-android-x:6.5.0"
 
 }

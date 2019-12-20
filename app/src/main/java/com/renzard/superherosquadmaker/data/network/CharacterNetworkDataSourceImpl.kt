@@ -16,17 +16,6 @@ class CharacterNetworkDataSourceImpl(
         get() = _downloadedCurrentWeather
 
     override suspend fun fetchCharacterData(
-//        name: String,
-//        comics: Comics,
-//        description: String,
-//        events: Events,
-//        id: Int,
-//        modified: String,
-//        resourceURI: String,
-//        eries: Series,
-//        stories: Stories,
-//        thumbnail: Thumbnail,
-//        urls: List<Url>
     ) {
         try {
             val fetchedCharacterData = marvelApiService.getAllCharacters()
