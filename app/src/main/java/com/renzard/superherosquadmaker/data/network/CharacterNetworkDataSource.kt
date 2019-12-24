@@ -1,22 +1,11 @@
 package com.renzard.superherosquadmaker.data.network
 
 import androidx.lifecycle.LiveData
-import com.renzard.superherosquadmaker.data.db.Result
+import com.renzard.superherosquadmaker.data.network.response.CharacterResponse
+
 
 interface CharacterNetworkDataSource {
-    val downloadedCharacterData: LiveData<Result>
+    val downloadedCharacterData: LiveData<CharacterResponse>
 
-    suspend fun fetchCharacterData(
-//        name: String,
-//        comics: Comics,
-//        description: String,
-//        events: Events,
-//        id: Int,
-//        modified: String,
-//        resourceURI: String,
-//        eries: Series,
-//        stories: Stories,
-//        thumbnail: Thumbnail,
-//        urls: List<Url>
-    )
+    suspend fun fetchCharacterData(characterOffset: Int, characterLimit: Int)
 }

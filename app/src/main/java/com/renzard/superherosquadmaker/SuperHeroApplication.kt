@@ -10,11 +10,13 @@ import com.renzard.superherosquadmaker.data.network.ConnectivityInterceptorImpl
 import com.renzard.superherosquadmaker.data.network.apiRequest.MarvelApiService
 import com.renzard.superherosquadmaker.data.repository.CharacterRepository
 import com.renzard.superherosquadmaker.data.repository.CharacterRepositoryImpl
+import com.renzard.superherosquadmaker.ui.list.CharacterListViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
 
@@ -31,6 +33,11 @@ class SuperHeroApplication : Application(), KodeinAware {
         bind<CharacterRepository>() with singleton {
             CharacterRepositoryImpl(
                 instance(),
+                instance()
+            )
+        }
+        bind() from provider {
+            CharacterListViewModelFactory(
                 instance()
             )
         }
