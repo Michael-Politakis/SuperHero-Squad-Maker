@@ -8,7 +8,7 @@ import com.renzard.superherosquadmaker.data.network.response.CharacterResponse
 import com.renzard.superherosquadmaker.internal.NoConnectivityException
 
 
-const val CHARACTER_LIMIT = 20
+const val CHARACTER_LIMIT = 100
 const val CHARACTER_OFFSET = 0
 class CharacterNetworkDataSourceImpl(
     private val marvelApiService: MarvelApiService
@@ -23,7 +23,7 @@ class CharacterNetworkDataSourceImpl(
     ) {
         try {
             val fetchedCharacterData = marvelApiService
-                .getAllCharacters(CHARACTER_OFFSET, CHARACTER_LIMIT)
+                .getAllCharactersAsync(CHARACTER_OFFSET, CHARACTER_LIMIT)
                 .await()
             _downloadedCharacterData.postValue(fetchedCharacterData)
         } catch (e: NoConnectivityException) {

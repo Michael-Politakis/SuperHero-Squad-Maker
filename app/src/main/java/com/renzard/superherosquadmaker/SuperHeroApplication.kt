@@ -1,7 +1,6 @@
 package com.renzard.superherosquadmaker
 
 import android.app.Application
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.renzard.superherosquadmaker.data.db.CharacterDatabase
 import com.renzard.superherosquadmaker.data.network.CharacterNetworkDataSource
 import com.renzard.superherosquadmaker.data.network.CharacterNetworkDataSourceImpl
@@ -10,14 +9,12 @@ import com.renzard.superherosquadmaker.data.network.ConnectivityInterceptorImpl
 import com.renzard.superherosquadmaker.data.network.apiRequest.MarvelApiService
 import com.renzard.superherosquadmaker.data.repository.CharacterRepository
 import com.renzard.superherosquadmaker.data.repository.CharacterRepositoryImpl
+import com.renzard.superherosquadmaker.ui.detail.DetailsViewModelFactory
 import com.renzard.superherosquadmaker.ui.list.CharacterListViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
+import org.kodein.di.generic.*
 
 
 class SuperHeroApplication : Application(), KodeinAware {
@@ -36,16 +33,12 @@ class SuperHeroApplication : Application(), KodeinAware {
                 instance()
             )
         }
-        bind() from provider {
-            CharacterListViewModelFactory(
-                instance()
-            )
-        }
+        bind() from provider { CharacterListViewModelFactory(instance()) }
+        bind() from factory { id: Int -> DetailsViewModelFactory(id, instance()) }
     }
 
     //initializes time for isFetchDataNeeded
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
     }
 }

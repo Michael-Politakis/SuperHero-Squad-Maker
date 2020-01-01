@@ -16,6 +16,7 @@ class ConnectivityInterceptorImpl(context: Context) : ConnectivityInterceptor {
         return chain.proceed(chain.request())
     }
 
+    @Suppress("DEPRECATION")
     private fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

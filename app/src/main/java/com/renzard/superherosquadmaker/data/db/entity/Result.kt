@@ -9,18 +9,19 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "character_data", indices = [Index(value = ["id"], unique = true)])
 data class Result(
-    @PrimaryKey(autoGenerate = true)
-    val databaseId: Int? = null,
     @SerializedName("name")
     val characterName: String,
-    @Embedded(prefix = "comics_")
-    val comics: Comics,
     @SerializedName("description")
     val description: String,
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     val id: Int,
     @Embedded(prefix = "thumbnail_")
-    val thumbnail: Thumbnail
+    val thumbnail: Thumbnail,
+    val characterSelected: Boolean = false
+
+    //    @Embedded(prefix = "comics_")
+//    val comics: Comics,
 //    val urls: List<Url>
 //    val modified: String,
 //    val resourceURI: String,

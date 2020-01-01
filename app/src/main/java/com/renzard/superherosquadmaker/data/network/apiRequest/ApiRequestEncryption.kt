@@ -1,7 +1,6 @@
 package com.renzard.superherosquadmaker.data.network.apiRequest
 
 import java.security.MessageDigest
-import java.text.SimpleDateFormat
 
 
 //this object makes all the necessary changes to the keys and the timestamp for for the api request
@@ -14,9 +13,9 @@ object ApiRequestEncryption {
     val publicKey =
         _publicKey
     //hash creator
-    fun toMD5hash(): String {
+    fun toMD5hash(timeString: String): String {
         val hash = MessageDigest.getInstance("MD5").digest(
-            getTimeStamp().toByteArray()
+            timeString.toByteArray()
                     + privateKey.toByteArray() + publicKey.toByteArray()
         )
         return hash.toHex()
@@ -27,11 +26,6 @@ object ApiRequestEncryption {
         return joinToString("") { "%02x".format(it) }
     }
 
-    //gets timestamps and formatting it
-    fun getTimeStamp(): String {
-        val timestamp: Long = System.currentTimeMillis()
-        return SimpleDateFormat("yyyyMMddHHmmSS").format(timestamp)
-    }
 
 
 }

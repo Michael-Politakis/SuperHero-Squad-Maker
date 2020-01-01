@@ -2,28 +2,29 @@ package com.renzard.superherosquadmaker.ui.list
 
 import com.bumptech.glide.Glide
 import com.renzard.superherosquadmaker.R
-import com.renzard.superherosquadmaker.data.db.localized.CharacterListSimpleEntry
+import com.renzard.superherosquadmaker.data.db.list.CharacterListSimpleEntry
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_character.*
 
 class CharacterItem(
     val characterEntry: CharacterListSimpleEntry
 ) : Item() {
-    override fun bind(viewHolder: ViewHolder, position: Int) {
+    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.apply {
-            character_name_display.text = characterEntry.characterName
-            characterIcon()
+            viewHolder.characterIcon()
+            viewHolder.character_name_display.text = characterEntry.characterName
 
         }
     }
 
     override fun getLayout() = R.layout.item_character
 
-    private fun ViewHolder.characterIcon() {
+    private fun GroupieViewHolder.characterIcon() {
         Glide.with(this.containerView)
-            .load(characterEntry.thumbnailPath)
-            .load(character_icon_display)
+            .load(characterEntry.thumbnailPath + "." + characterEntry.thumbnailExtension)
+            .thumbnail(0.1f)
+            .into(character_icon_display)
     }
 
 }

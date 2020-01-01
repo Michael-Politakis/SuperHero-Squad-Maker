@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/characterListFragment">
+
+    <fragment
+        android:id="@+id/characterListFragment"
+        android:name="com.renzard.superherosquadmaker.ui.list.CharacterListFragment"
+        android:label="Superhero Squad Maker"
+        tools:layout="@layout/character_list_fragment">
+        <action
+            android:id="@+id/actionDetail"
+            app:destination="@+id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.renzard.superherosquadmaker.ui.detail.DetailsFragment"
+        android:label="details_fragment"
+        tools:layout="@layout/details_fragment">
+        <argument
+            android:name="characterId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailsFragment_to_characterListFragment"
+            app:destination="@+id/characterListFragment" />
+    </fragment>
+</navigation>

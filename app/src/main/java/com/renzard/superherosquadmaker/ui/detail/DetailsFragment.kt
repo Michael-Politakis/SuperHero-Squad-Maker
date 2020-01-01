@@ -1,0 +1,81 @@
+package com.renzard.superherosquadmaker.ui.detail
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.renzard.superherosquadmaker.R
+import com.renzard.superherosquadmaker.internal.IdNotFountException
+import com.renzard.superherosquadmaker.ui.base.ScopedFragment
+import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.factory
+
+class DetailsFragment : ScopedFragment(), KodeinAware {
+
+    override val kodein by closestKodein()
+
+    private val instanceFactory:
+            ((Int) -> DetailsViewModelFactory) by factory()
+
+    private lateinit var viewModel: DetailsViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        (activity as AppCompatActivity).supportActionBar?.hide()
+
+
+        return inflater.inflate(R.layout.details_fragment, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val id = arguments?.let { DetailsFragmentArgs.fromBundle(it).characterId }
+        try {
+            val characterId = id ?: IdNotFountException()
+            viewModel = ViewModelProviders.of(this, instanceFactory(characterId.toString().toInt()))
+                .get(DetailsViewModel::class.java)
+        } catch (e: IdNotFountException) {
+            println("Character was not retrieved")
+        }
+
+        bindUI()
+    }
+
+
+    private fun bindUI() = launch(Dispatchers.Main) {
+        val characterDetail = viewModel.character.await()
+        characterDetail.observe(this@DetailsFragment, Observer { characterEntry ->
+            if (characterEntry == null) return@Observer
+            progressBar_loading2.visibility = View.GONE
+            textView_loading2.visibility = View.GONE
+
+            characterNameDisplay.text = characterEntry.characterName
+
+            descriptionDisplay.text = characterEntry.description
+            Glide.with(this@DetailsFragment)
+
+                .load(characterEntry.thumbnailPath + "." + characterEntry.thumbnailExtension)
+                .format(DecodeFormat.PREFER_RGB_565)
+                .thumbnail(0.5f)
+                .into(characterPhoto)
+
+
+        })
+    }
+
+
+}
+
+

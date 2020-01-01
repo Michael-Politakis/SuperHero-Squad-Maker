@@ -1,19 +1,14 @@
-package com.renzard.superherosquadmaker.ui.list
+package com.renzard.superherosquadmaker.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.renzard.superherosquadmaker.data.repository.CharacterRepository
 import com.renzard.superherosquadmaker.internal.lazyDeferred
 
-class CharacterListViewModel(
+class DetailsViewModel(
+    private val characterId: Int,
     private val characterRepository: CharacterRepository
 ) : ViewModel() {
-
-
-    val characters by lazyDeferred {
-        Log.d("debug", "CharacterListViewModel")
-        characterRepository.getCharacterList()
+    val character by lazyDeferred {
+        characterRepository.getCharacterDetails(characterId)
     }
-
 }
-
