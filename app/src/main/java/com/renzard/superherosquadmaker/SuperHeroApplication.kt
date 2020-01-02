@@ -37,8 +37,4 @@ class SuperHeroApplication : Application(), KodeinAware {
         bind() from factory { id: Int -> DetailsViewModelFactory(id, instance()) }
     }
 
-    //initializes time for isFetchDataNeeded
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

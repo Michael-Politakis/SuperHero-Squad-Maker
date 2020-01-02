@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renzard.superherosquadmaker.R
 import com.renzard.superherosquadmaker.data.db.list.CharacterListSimpleEntry
+import com.renzard.superherosquadmaker.data.db.selected.SelectedCharacters
 import com.renzard.superherosquadmaker.ui.base.ScopedFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -30,7 +31,6 @@ class CharacterListFragment : ScopedFragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.character_list_fragment, container, false)
 
     }
@@ -41,6 +41,7 @@ class CharacterListFragment : ScopedFragment(), KodeinAware {
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel::class.java)
         bindUI()
+//        selectedUI()
 
     }
 
@@ -82,6 +83,42 @@ class CharacterListFragment : ScopedFragment(), KodeinAware {
     private fun showCharacterDetail(characterId: Int, view: View) {
         val actionDetail = CharacterListFragmentDirections.actionDetail(characterId)
         Navigation.findNavController(view).navigate(actionDetail)
+    }
+
+    private fun selectedUI() = launch(Dispatchers.Main) {
+
+        val characters = viewModel.selectedCharacters.await()
+        characters.observe(this@CharacterListFragment, Observer { charactersEntries ->
+            if (charactersEntries == null) return@Observer
+            else
+                initCharactersSelectedRecycler(charactersEntries.toSelectedItems())
+        })
+    }
+
+
+    private fun initCharactersSelectedRecycler(items: List<SelectedItems>) {
+
+        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
+            addAll(items)
+        }
+
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@CharacterListFragment.context)
+            adapter = groupAdapter
+        }
+
+        groupAdapter.setOnItemClickListener { item, view ->
+            (item as? CharacterItem)?.let {
+                showCharacterDetail(it.characterEntry.characterId, view)
+            }
+        }
+    }
+
+    private fun List<SelectedCharacters>.toSelectedItems(): List<SelectedItems> {
+        return this.map {
+            SelectedItems(it)
+        }
     }
 
 

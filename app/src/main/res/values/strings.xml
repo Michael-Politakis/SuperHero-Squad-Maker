@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Superhero Squad Maker</string>
     <string name="character_photo">characterPhoto</string>
-    <string name="hire_to_squad">Hire to Squad</string>
+    <string name="hire_to_squad">Hire To Squad</string>
     <string name="loading">Loading</string>
+    <string name="fire_from_squad">Fire From Squad</string>
 </resources>

@@ -1,10 +1,10 @@
 package com.renzard.superherosquadmaker.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.renzard.superherosquadmaker.data.db.CharacterListDao
 import com.renzard.superherosquadmaker.data.db.details.CharacterDetailEntry
 import com.renzard.superherosquadmaker.data.db.list.CharacterListSimpleEntry
+import com.renzard.superherosquadmaker.data.db.selected.SelectedCharacters
 import com.renzard.superherosquadmaker.data.network.CHARACTER_LIMIT
 import com.renzard.superherosquadmaker.data.network.CHARACTER_OFFSET
 import com.renzard.superherosquadmaker.data.network.CharacterNetworkDataSource
@@ -21,7 +21,6 @@ class CharacterRepositoryImpl(
 
     //init with live data observer
     init {
-        Log.d("debug", "data persistance")
         characterNetworkDataSource.apply {
             downloadedCharacterData.observeForever { fetchedCharacterData ->
                 persistFetchedCharacterData(fetchedCharacterData)
@@ -31,7 +30,6 @@ class CharacterRepositoryImpl(
 
     //coroutine to return data
     override suspend fun getCharacterList(): LiveData<out List<CharacterListSimpleEntry>> {
-        Log.d("debug", "Repo")
         return withContext(Dispatchers.IO) {
             initCharacterData()
             return@withContext characterListDao.getCharacterList()
@@ -44,6 +42,29 @@ class CharacterRepositoryImpl(
             return@withContext characterListDao.getCharacterDetails(id)
         }
     }
+
+    override suspend fun getSelected(): LiveData<out List<SelectedCharacters>> {
+        return withContext(Dispatchers.IO) {
+            initCharacterData()
+            return@withContext characterListDao.getSelected()
+        }
+    }
+
+    override suspend fun getSelectedID(id: Int): LiveData<out SelectedCharacters> {
+        return withContext(Dispatchers.IO) {
+            initCharacterData()
+            return@withContext characterListDao.getSelectedId(id)
+        }
+    }
+
+    override suspend fun setSelected(selectedHeroId: Int) {
+        characterListDao.setSelected(selectedHeroId)
+    }
+
+    override suspend fun setNotSelected(selectedHeroId: Int) {
+        characterListDao.setNotSelected(selectedHeroId)
+    }
+
 
     //data persisance
     private fun persistFetchedCharacterData(fetchedCharacterData: CharacterResponse) {

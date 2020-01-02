@@ -1,5 +1,6 @@
 package com.renzard.superherosquadmaker.ui.detail
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,6 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
     ): View? {
         (activity as AppCompatActivity).supportActionBar?.hide()
 
-
         return inflater.inflate(R.layout.details_fragment, container, false)
     }
 
@@ -51,6 +51,37 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
         }
 
         bindUI()
+        selectedCheck()
+
+    }
+
+    private fun selectedCheck() = launch(Dispatchers.Main) {
+
+        val checkSelected = viewModel.isSelectedCharacter.await()
+        checkSelected.observe(this@DetailsFragment, Observer { characterEntry ->
+            if (characterEntry == null) return@Observer
+
+
+            clickButton(characterEntry.characterSelected)
+        })
+
+
+    }
+
+    private fun clickButton(characterSelected: Boolean) {
+        chooseButton.setOnClickListener {
+            if (characterSelected) {
+                chooseButton.text = getResources().getText(R.string.fire_from_squad)
+                chooseButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.chosen)))
+                viewModel.selectCharacter(false)
+
+            } else {
+                chooseButton.text = getResources().getText(R.string.hire_to_squad)
+                chooseButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
+                viewModel.selectCharacter(true)
+            }
+        }
+
     }
 
 
@@ -77,5 +108,6 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
 
 
 }
+
 
 

@@ -18,6 +18,7 @@ data class Result(
     val id: Int,
     @Embedded(prefix = "thumbnail_")
     val thumbnail: Thumbnail,
+    @SerializedName("characterSelected")
     val characterSelected: Boolean = false
 
     //    @Embedded(prefix = "comics_")
