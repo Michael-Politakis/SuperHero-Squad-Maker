@@ -65,6 +65,12 @@ class CharacterRepositoryImpl(
         characterListDao.setNotSelected(selectedHeroId)
     }
 
+//    override suspend fun getComics(id: Int): LiveData<out List<ComicEntry>> {
+//        return withContext(Dispatchers.IO) {
+//            initCharacterData()
+//            return@withContext characterListDao.getComics(id)
+//        }    }
+
 
     //data persisance
     private fun persistFetchedCharacterData(fetchedCharacterData: CharacterResponse) {

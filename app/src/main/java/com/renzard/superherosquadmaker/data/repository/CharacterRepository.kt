@@ -17,4 +17,7 @@ interface CharacterRepository {
     suspend fun setSelected(selectedHeroId: Int)
 
     suspend fun setNotSelected(selectedHeroId: Int)
+
+//    suspend fun getComics(id: Int) : LiveData<out List<ComicEntry>>
+
 }

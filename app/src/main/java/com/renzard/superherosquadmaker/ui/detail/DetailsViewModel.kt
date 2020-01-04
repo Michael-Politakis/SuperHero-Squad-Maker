@@ -19,6 +19,10 @@ class DetailsViewModel(
         characterRepository.getSelectedID(characterId)
     }
 
+//    val comics by lazyDeferred{
+//        characterRepository.getComics(characterId)
+//    }
+
 
     fun selectCharacter(isSelected: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {

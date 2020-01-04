@@ -11,7 +11,7 @@
         android:label="Superhero Squad Maker"
         tools:layout="@layout/character_list_fragment">
         <action
-            android:id="@+id/actionDetail"
+            android:id="@+id/chosen_character"
             app:destination="@+id/detailsFragment" />
     </fragment>
     <fragment
@@ -22,8 +22,5 @@
         <argument
             android:name="characterId"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_detailsFragment_to_characterListFragment"
-            app:destination="@+id/characterListFragment" />
     </fragment>
 </navigation>

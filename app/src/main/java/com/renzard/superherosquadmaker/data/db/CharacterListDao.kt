@@ -12,7 +12,7 @@ import com.renzard.superherosquadmaker.data.db.selected.SelectedCharactersImpl
 
 @Dao
 interface CharacterListDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(characterListEntries: List<Result>)
 
 
@@ -21,6 +21,9 @@ interface CharacterListDao {
 
     @Query("select * from character_data where id = :id")
     fun getCharacterDetails(id: Int): LiveData<CharacterDetailEntryImpl>
+
+//    @Query("select comics_name and comics_resourceURI from character_data where id = :id")
+//    fun getComics(id: Int) : LiveData<ComicEntryImpl>
 
     @Query("select * from character_data where characterSelected = 1")
     fun getSelected(): LiveData<List<SelectedCharactersImpl>>
@@ -33,4 +36,6 @@ interface CharacterListDao {
 
     @Query("update character_data set characterSelected = 0 where id = :id")
     fun setNotSelected(id: Int)
+
+
 }

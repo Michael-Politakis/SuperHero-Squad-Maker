@@ -5,7 +5,7 @@ import com.renzard.superherosquadmaker.R
 import com.renzard.superherosquadmaker.data.db.selected.SelectedCharacters
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_character.*
+import kotlinx.android.synthetic.main.selected_characters.*
 
 class SelectedItems(
     val selectedCharacters: SelectedCharacters
@@ -17,13 +17,13 @@ class SelectedItems(
         }
     }
 
-    override fun getLayout() = R.layout.characters_selected
+    override fun getLayout() = R.layout.selected_characters
 
     private fun GroupieViewHolder.characterIcon() {
         Glide.with(this.containerView)
             .load(selectedCharacters.thumbnailPath + "." + selectedCharacters.thumbnailExtension)
             .thumbnail(0.1f)
-            .into(character_icon_display)
+            .into(selected_icon)
     }
 
 }

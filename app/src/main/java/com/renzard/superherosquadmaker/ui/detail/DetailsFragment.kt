@@ -36,6 +36,7 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
         (activity as AppCompatActivity).supportActionBar?.hide()
 
         return inflater.inflate(R.layout.details_fragment, container, false)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -49,9 +50,9 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
         } catch (e: IdNotFountException) {
             println("Character was not retrieved")
         }
-
-        bindUI()
         selectedCheck()
+        bindUI()
+
 
     }
 
@@ -69,16 +70,26 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun clickButton(characterSelected: Boolean) {
+        if (!characterSelected) {
+            chooseButton.text = getResources().getText(R.string.hire_to_squad)
+            chooseButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
+
+        } else {
+            chooseButton.text = getResources().getText(R.string.fire_from_squad)
+            chooseButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.chosen)))
+
+        }
         chooseButton.setOnClickListener {
-            if (characterSelected) {
+            if (!characterSelected) {
                 chooseButton.text = getResources().getText(R.string.fire_from_squad)
                 chooseButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.chosen)))
-                viewModel.selectCharacter(false)
+                viewModel.selectCharacter(true)
 
             } else {
                 chooseButton.text = getResources().getText(R.string.hire_to_squad)
                 chooseButton.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.colorAccent)))
-                viewModel.selectCharacter(true)
+                viewModel.selectCharacter(false)
+
             }
         }
 
@@ -105,6 +116,37 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
 
         })
     }
+
+//    private fun comicUI() = launch(Dispatchers.Main) {
+//
+//        val comics = viewModel.comics.await()
+//        comics.observe(this@DetailsFragment, Observer { comicEntries ->
+//            if (comicEntries == null) return@Observer
+//                initComicsRecycler(comicEntries.toComicItems())
+//
+//        })
+//    }
+//
+//
+//    private fun initComicsRecycler(items: List<ComicItem>) {
+//
+//        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
+//            addAll(items)
+//        }
+//
+//
+//        recycler_selected.apply {
+//            layoutManager = GridLayoutManager(this@DetailsFragment.context, 3)
+//            adapter = groupAdapter
+//        }
+//
+//    }
+//
+//    private fun List<ComicEntry>.toComicItems(): List<ComicItem> {
+//        return this.map {
+//            ComicItem(it)
+//        }
+//    }
 
 
 }

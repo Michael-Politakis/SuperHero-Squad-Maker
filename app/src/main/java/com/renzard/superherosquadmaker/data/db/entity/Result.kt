@@ -19,10 +19,9 @@ data class Result(
     @Embedded(prefix = "thumbnail_")
     val thumbnail: Thumbnail,
     @SerializedName("characterSelected")
-    val characterSelected: Boolean = false
-
-    //    @Embedded(prefix = "comics_")
-//    val comics: Comics,
+    var characterSelected: Boolean = false
+//    @Embedded(prefix = "comics_")
+//    val comics: Item
 //    val urls: List<Url>
 //    val modified: String,
 //    val resourceURI: String,

@@ -24,6 +24,7 @@ interface MarvelApiService {
         @Query("limit") characterLimit: Int
     ): Deferred<CharacterResponse>
 
+
     //intercepts all the get requests with the api key timestamp and hash
     companion object {
         operator fun invoke(
