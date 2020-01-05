@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#5003f9</color>
     <color name="colorAccent">#5F0AFF</color>
     <color name="chosen">#cc423f</color>
+    <color name="bold">#000000</color>
 </resources>

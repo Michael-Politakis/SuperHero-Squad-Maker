@@ -1,7 +1,7 @@
 package com.renzard.superherosquadmaker.data.network.response
 
 import androidx.room.Embedded
-import com.renzard.superherosquadmaker.data.db.entity.Data
+import com.renzard.superherosquadmaker.data.db.entity.characters.Data
 
 
 data class CharacterResponse(

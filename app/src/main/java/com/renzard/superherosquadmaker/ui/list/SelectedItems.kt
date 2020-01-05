@@ -13,6 +13,7 @@ class SelectedItems(
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.apply {
             viewHolder.characterIcon()
+            viewHolder.selected_name.text = selectedCharacters.characterName
 
         }
     }

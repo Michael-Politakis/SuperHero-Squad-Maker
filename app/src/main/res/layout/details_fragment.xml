@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     android:orientation="vertical"
     tools:context=".ui.detail.DetailsFragment">
 
@@ -68,8 +70,6 @@
             android:id="@+id/characterNameDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -77,10 +77,8 @@
             android:id="@+id/chooseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            app:backgroundTint="@color/colorAccent"
             android:text="@string/hire_to_squad"
+            app:backgroundTint="@color/colorAccent"
             app:cornerRadius="11dp" />
 
 
@@ -88,11 +86,16 @@
             android:id="@+id/descriptionDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:gravity="start" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recently_appeared_in"
+            android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comic_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

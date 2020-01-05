@@ -1,4 +1,4 @@
-package com.renzard.superherosquadmaker.data.db.entity
+package com.renzard.superherosquadmaker.data.db.entity.comics
 
 
 data class Events(

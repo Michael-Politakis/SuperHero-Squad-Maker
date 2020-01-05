@@ -8,11 +8,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.renzard.superherosquadmaker.R
+import com.renzard.superherosquadmaker.data.db.details.ComicEntry
 import com.renzard.superherosquadmaker.internal.IdNotFountException
 import com.renzard.superherosquadmaker.ui.base.ScopedFragment
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,7 +57,7 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
         selectedCheck()
         bindUI()
 
-
+        comicUI()
     }
 
     private fun selectedCheck() = launch(Dispatchers.Main) {
@@ -117,39 +121,37 @@ class DetailsFragment : ScopedFragment(), KodeinAware {
         })
     }
 
-//    private fun comicUI() = launch(Dispatchers.Main) {
-//
-//        val comics = viewModel.comics.await()
-//        comics.observe(this@DetailsFragment, Observer { comicEntries ->
-//            if (comicEntries == null) return@Observer
-//                initComicsRecycler(comicEntries.toComicItems())
-//
-//        })
-//    }
-//
-//
-//    private fun initComicsRecycler(items: List<ComicItem>) {
-//
-//        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
-//            addAll(items)
-//        }
-//
-//
-//        recycler_selected.apply {
-//            layoutManager = GridLayoutManager(this@DetailsFragment.context, 3)
-//            adapter = groupAdapter
-//        }
-//
-//    }
-//
-//    private fun List<ComicEntry>.toComicItems(): List<ComicItem> {
-//        return this.map {
-//            ComicItem(it)
-//        }
-//    }
+    private fun comicUI() = launch(Dispatchers.Main) {
+
+        val comics = viewModel.comics.await()
+        comics.observe(this@DetailsFragment, Observer { comicEntries ->
+            if (comicEntries == null) return@Observer
+            initComicsRecycler(comicEntries.toComicItems())
+
+        })
+    }
+
+
+    private fun initComicsRecycler(items: List<ComicItem>) {
+
+        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
+            addAll(items)
+        }
+
+
+        comic_recycler.apply {
+            layoutManager = GridLayoutManager(this@DetailsFragment.context, 2)
+            adapter = groupAdapter
+        }
+
+    }
+
+    private fun List<ComicEntry>.toComicItems(): List<ComicItem> {
+        return this.map {
+            ComicItem(it)
+        }
+    }
 
 
 }
-
-
 

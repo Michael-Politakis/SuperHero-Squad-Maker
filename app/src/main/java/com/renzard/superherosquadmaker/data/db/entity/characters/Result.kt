@@ -1,4 +1,4 @@
-package com.renzard.superherosquadmaker.data.db.entity
+package com.renzard.superherosquadmaker.data.db.entity.characters
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -21,7 +21,7 @@ data class Result(
     @SerializedName("characterSelected")
     var characterSelected: Boolean = false
 //    @Embedded(prefix = "comics_")
-//    val comics: Item
+//    val comics: Comics
 //    val urls: List<Url>
 //    val modified: String,
 //    val resourceURI: String,

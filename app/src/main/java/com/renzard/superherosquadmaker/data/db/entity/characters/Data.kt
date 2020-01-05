@@ -1,4 +1,4 @@
-package com.renzard.superherosquadmaker.data.db.entity
+package com.renzard.superherosquadmaker.data.db.entity.characters
 
 import com.google.gson.annotations.SerializedName
 

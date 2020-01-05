@@ -32,6 +32,7 @@ class CharacterListFragment : ScopedFragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.character_list_fragment, container, false)
 
     }
@@ -41,7 +42,7 @@ class CharacterListFragment : ScopedFragment(), KodeinAware {
 
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel::class.java)
-
+        recycler_selected.visibility = View.GONE
         selectedUI()
 
         bindUI()
@@ -95,6 +96,7 @@ class CharacterListFragment : ScopedFragment(), KodeinAware {
         characters.observe(this@CharacterListFragment, Observer { charactersEntries ->
             if (charactersEntries == null) return@Observer
             if (charactersEntries.count() > 0) {
+                recycler_selected.visibility = View.VISIBLE
                 initCharactersSelectedRecycler(charactersEntries.toSelectedItems())
             }
         })

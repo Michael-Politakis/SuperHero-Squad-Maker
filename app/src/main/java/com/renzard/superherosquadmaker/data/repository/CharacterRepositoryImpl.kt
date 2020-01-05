@@ -3,6 +3,8 @@ package com.renzard.superherosquadmaker.data.repository
 import androidx.lifecycle.LiveData
 import com.renzard.superherosquadmaker.data.db.CharacterListDao
 import com.renzard.superherosquadmaker.data.db.details.CharacterDetailEntry
+import com.renzard.superherosquadmaker.data.db.details.ComicEntry
+import com.renzard.superherosquadmaker.data.db.entity.comics.ComicResponse
 import com.renzard.superherosquadmaker.data.db.list.CharacterListSimpleEntry
 import com.renzard.superherosquadmaker.data.db.selected.SelectedCharacters
 import com.renzard.superherosquadmaker.data.network.CHARACTER_LIMIT
@@ -24,6 +26,10 @@ class CharacterRepositoryImpl(
         characterNetworkDataSource.apply {
             downloadedCharacterData.observeForever { fetchedCharacterData ->
                 persistFetchedCharacterData(fetchedCharacterData)
+
+                downloadedComicData.observeForever { fetchedComicData ->
+                    persistFetchedComicData(fetchedComicData)
+                }
             }
         }
     }
@@ -65,11 +71,6 @@ class CharacterRepositoryImpl(
         characterListDao.setNotSelected(selectedHeroId)
     }
 
-//    override suspend fun getComics(id: Int): LiveData<out List<ComicEntry>> {
-//        return withContext(Dispatchers.IO) {
-//            initCharacterData()
-//            return@withContext characterListDao.getComics(id)
-//        }    }
 
 
     //data persisance
@@ -89,6 +90,29 @@ class CharacterRepositoryImpl(
     private suspend fun fetchCharacterData() {
         characterNetworkDataSource.fetchCharacterData(CHARACTER_OFFSET, CHARACTER_LIMIT)
     }
+
+    private fun persistFetchedComicData(fetchedComicData: ComicResponse) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val fetchedComicList = fetchedComicData.data.results
+            characterListDao.insertComic(fetchedComicList)
+        }
+    }
+
+    private suspend fun fetchComicData(characterId: Int) {
+        characterNetworkDataSource.fetchComicData(characterId)
+    }
+
+    private suspend fun initComicData(characterId: Int) {
+        fetchComicData(characterId)
+    }
+
+    override suspend fun getComicList(characterId: Int): LiveData<out List<ComicEntry>> {
+        return withContext(Dispatchers.IO) {
+            initComicData(characterId)
+            return@withContext characterListDao.getComics()
+        }
+    }
+
 
 
 

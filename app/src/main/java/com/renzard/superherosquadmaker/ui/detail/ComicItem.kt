@@ -13,7 +13,7 @@ class ComicItem(
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.apply {
             viewHolder.comicIcon()
-            viewHolder.comic_name.text = comics.name
+            viewHolder.comic_name.text = comics.comicTitle
 
         }
     }
@@ -22,7 +22,7 @@ class ComicItem(
 
     private fun GroupieViewHolder.comicIcon() {
         Glide.with(this.containerView)
-            .load(comics.resourceURI)
+            .load(comics.comicPath + "." + comics.comicExtension)
             .thumbnail(0.1f)
             .into(comic_display)
     }

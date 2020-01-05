@@ -2,6 +2,7 @@ package com.renzard.superherosquadmaker.data.repository
 
 import androidx.lifecycle.LiveData
 import com.renzard.superherosquadmaker.data.db.details.CharacterDetailEntry
+import com.renzard.superherosquadmaker.data.db.details.ComicEntry
 import com.renzard.superherosquadmaker.data.db.list.CharacterListSimpleEntry
 import com.renzard.superherosquadmaker.data.db.selected.SelectedCharacters
 
@@ -18,6 +19,6 @@ interface CharacterRepository {
 
     suspend fun setNotSelected(selectedHeroId: Int)
 
-//    suspend fun getComics(id: Int) : LiveData<out List<ComicEntry>>
+    suspend fun getComicList(characterId: Int): LiveData<out List<ComicEntry>>
 
 }

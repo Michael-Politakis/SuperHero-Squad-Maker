@@ -2,6 +2,7 @@ package com.renzard.superherosquadmaker.data.network.apiRequest
 
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.renzard.superherosquadmaker.data.db.entity.comics.ComicResponse
 import com.renzard.superherosquadmaker.data.network.ConnectivityInterceptor
 import com.renzard.superherosquadmaker.data.network.response.CharacterResponse
 import kotlinx.coroutines.Deferred
@@ -11,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -23,6 +25,13 @@ interface MarvelApiService {
         @Query("offset") characterOffset: Int,
         @Query("limit") characterLimit: Int
     ): Deferred<CharacterResponse>
+
+    //https://gateway.marvel.com:443/v1/public/characters/1011334/comics?orderBy=-onsaleDate&apikey=406c7ecb65228cf129bba9073093bef5
+    @GET("characters/{characterId}/comics")
+    fun getRecentComicsAsync(
+        @Path("characterId") characterId: Int,
+        @Query("orderBy") orderBy: String = "onsaleDate"
+    ): Deferred<ComicResponse>
 
 
     //intercepts all the get requests with the api key timestamp and hash
